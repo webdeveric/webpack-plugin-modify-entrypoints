@@ -1,0 +1,26 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "entrypoints",
+    "env",
+    "memfs",
+    "npmrc",
+    "pnpm",
+    "postbuild",
+    "preinstall",
+    "tapable",
+    "typecheck",
+    "vitest",
+    "webdeveric",
+    "webpack"
+  ],
+  "flagWords": [],
+  "ignorePaths": ["pnpm-lock.yaml", "package.json", "node_modules", ".vscode"],
+  "languageSettings": [
+    {
+      "languageId": "commit-msg",
+      "ignoreRegExpList": ["/^#.*/gm"]
+    }
+  ]
+}

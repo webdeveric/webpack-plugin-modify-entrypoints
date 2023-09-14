@@ -1,0 +1,85 @@
+{
+  "name": "webpack-plugin-modify-entrypoints",
+  "version": "0.0.0",
+  "description": "webpack plugin to modify entrypoint contents",
+  "license": "MIT",
+  "author": {
+    "email": "eric@webdeveric.com",
+    "name": "Eric King",
+    "url": "http://webdeveric.com/"
+  },
+  "keywords": [
+    "webpack",
+    "plugin",
+    "modify",
+    "entrypoints"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webdeveric/webpack-plugin-modify-entrypoints.git"
+  },
+  "bugs": {
+    "url": "https://github.com/webdeveric/webpack-plugin-modify-entrypoints/issues"
+  },
+  "homepage": "https://github.com/webdeveric/webpack-plugin-modify-entrypoints",
+  "type": "module",
+  "packageManager": "pnpm@8.7.5",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/plugin.d.ts",
+      "import": "./dist/plugin.js"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "lint": "eslint ./*{js,cjs,mjs,mts} ./src ./test",
+    "clean": "rimraf ./coverage/ ./dist/",
+    "prebuild": "pnpm clean",
+    "build": "tsc -p ./tsconfig.build.json",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.project-files.json",
+    "spellcheck": "cspell --no-progress './{.github,src,test}/**/*.{ts,js,json}' './*.{md,js}' './package.json'",
+    "format": "prettier --write ./*.{js,json,md} ./src/ ./test/ --no-error-on-unmatched-pattern",
+    "test": "NODE_OPTIONS='--loader ts-node/esm --no-warnings' vitest -c vitest.config.mts",
+    "coverage": "NODE_OPTIONS='--loader ts-node/esm --no-warnings' vitest run  -c vitest.config.mts --coverage",
+    "prepack": "pnpm build",
+    "prepublishOnly": "pnpm typecheck && pnpm spellcheck && pnpm lint && pnpm coverage",
+    "prepare": "husky install"
+  },
+  "prettier": "@webdeveric/prettier-config",
+  "peerDependencies": {
+    "webpack": ">=5"
+  },
+  "devDependencies": {
+    "@types/loader-utils": "^2.0.4",
+    "@types/node": "^18.17.15",
+    "@vitest/coverage-v8": "^0.34.4",
+    "@webdeveric/eslint-config-ts": "^0.7.1",
+    "@webdeveric/prettier-config": "^0.2.0",
+    "cspell": "^7.3.6",
+    "eslint": "^8.49.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-import-resolver-typescript": "^3.6.0",
+    "eslint-plugin-import": "^2.28.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1",
+    "memfs": "^4.2.1",
+    "prettier": "^3.0.3",
+    "raw-loader": "^4.0.2",
+    "rimraf": "^5.0.1",
+    "tapable": "^2.2.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.4",
+    "webpack": "^5.88.2"
+  }
+}
