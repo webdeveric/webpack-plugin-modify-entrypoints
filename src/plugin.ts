@@ -1,3 +1,4 @@
+import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { makeIdent } from './utils.js';
@@ -29,7 +30,7 @@ export class ModifyEntryPoints implements WebpackPluginInstance {
     // webpack types are wrong. It should allow `undefined` to be returned.
     (compiler.hooks.entryOption as unknown as SyncBailHook<[string, EntryNormalized], undefined>).tap(
       PLUGIN_NAME,
-      (_, entry) => {
+      (context, entry) => {
         Promise.resolve()
           .then(() => (typeof entry === 'function' ? entry() : entry))
           .then(entryNormalized => {
@@ -37,7 +38,7 @@ export class ModifyEntryPoints implements WebpackPluginInstance {
               value.import?.forEach((importPath, index, imports) => {
                 infraLogger.status(`Recording imports: ${key} - ${index + 1} of ${imports.length}`);
 
-                entryPoints.set(importPath, {
+                entryPoints.set(resolve(context, importPath), {
                   processed: false,
                   entryKey: key,
                 });
@@ -45,6 +46,8 @@ export class ModifyEntryPoints implements WebpackPluginInstance {
             });
 
             infraLogger.status();
+
+            infraLogger.debug({ entryPoints });
           })
           .catch(error => {
             infraLogger.status();
