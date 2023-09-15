@@ -6,6 +6,7 @@
     "env",
     "memfs",
     "npmrc",
+    "nvmrc",
     "pnpm",
     "postbuild",
     "preinstall",
@@ -16,11 +17,18 @@
     "webpack"
   ],
   "flagWords": [],
-  "ignorePaths": ["pnpm-lock.yaml", "package.json", "node_modules", ".vscode"],
+  "ignorePaths": [
+    "pnpm-lock.yaml",
+    "package.json",
+    "node_modules",
+    ".vscode"
+  ],
   "languageSettings": [
     {
       "languageId": "commit-msg",
-      "ignoreRegExpList": ["/^#.*/gm"]
+      "ignoreRegExpList": [
+        "/^#.*/gm"
+      ]
     }
   ]
 }
