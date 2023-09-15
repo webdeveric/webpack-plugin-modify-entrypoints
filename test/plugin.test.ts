@@ -178,5 +178,57 @@ describe.concurrent('ModifyEntryPoints', () => {
 
       expect(sharedFileContents.includes("console.log('Demo2');")).toBeTruthy();
     });
+
+    it('entry: () => EntryStatic', async () => {
+      const modifyFn = vi.fn(source => `import './demo2.js'; ${source.toString()}`);
+
+      const { compiler, run } = create(
+        {
+          entry: () => ({
+            demo: resolve(__dirname, './fixtures/demo.js'),
+          }),
+          output: {
+            clean: true,
+            path: resolve(__dirname, './fixtures/dist'),
+          },
+        },
+        {
+          modify: modifyFn,
+        },
+      );
+
+      await expect(run()).resolves.toBeDefined();
+
+      expect(modifyFn).toHaveBeenCalledOnce();
+
+      const demoFileContents = await new Promise<string>((res, rej) => {
+        compiler.outputFileSystem.readFile(resolve(__dirname, './fixtures/dist/demo.js'), (error, contents) => {
+          (error && rej(error)) || res(contents?.toString() ?? '');
+        });
+      });
+
+      expect(demoFileContents.includes("console.log('Demo2');")).toBeTruthy();
+    });
+
+    it('entry: () => throws', async () => {
+      const modifyFn = vi.fn(source => `import './demo2.js'; ${source.toString()}`);
+
+      const { run } = create(
+        {
+          entry: () => {
+            throw new Error('Entry error');
+          },
+          output: {
+            clean: true,
+            path: resolve(__dirname, './fixtures/dist'),
+          },
+        },
+        {
+          modify: modifyFn,
+        },
+      );
+
+      await expect(run()).rejects.toBeInstanceOf(Error);
+    });
   });
 });
