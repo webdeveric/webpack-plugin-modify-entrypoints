@@ -6,6 +6,10 @@ import { type Compiler, type Configuration, webpack } from 'webpack';
 export function makeCompiler(config: Configuration): Compiler {
   const compiler = webpack({
     mode: 'development',
+    infrastructureLogging: {
+      level: 'none',
+      debug: false,
+    },
     ...config,
   });
 
