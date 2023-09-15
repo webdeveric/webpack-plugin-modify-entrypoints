@@ -43,8 +43,11 @@ export class ModifyEntryPoints implements WebpackPluginInstance {
                 });
               });
             });
+
+            infraLogger.status();
           })
           .catch(error => {
+            infraLogger.status();
             infraLogger.error(error);
           });
       },
@@ -91,6 +94,8 @@ export class ModifyEntryPoints implements WebpackPluginInstance {
               processed: true,
             });
           }
+
+          infraLogger.status();
         },
       );
     });
