@@ -6,7 +6,13 @@
 
 ## Example usage
 
-Add this to your webpack plugins array.
+Import plugin in your webpack config.
+
+```js
+import { ModifyEntryPoints } from 'webpack-plugin-modify-entrypoints';
+```
+
+Add this to your plugins array.
 
 ```js
 new ModifyEntryPoints({
@@ -16,6 +22,6 @@ new ModifyEntryPoints({
       ${source}
       // After
     `;
-  }
+  },
 });
 ```
